@@ -1,0 +1,105 @@
+.register-container {
+    background-color: #E6F0FA;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* Đảm bảo có khoảng cách trên màn hình nhỏ */
+}
+
+.register-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.register-box h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.register-box p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.register-input {
+    height: 40px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.register-button {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+    background: linear-gradient(272.65deg, #0cceb0 20.05%, #2ad38b 84.62%);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-button:hover,
+.register-button:focus {
+    background: linear-gradient(272.65deg, #0bbfa2 20.05%, #26c47f 84.62%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .register-container {
+        padding: 15px;
+        /* Giảm padding trên màn hình nhỏ */
+    }
+
+    .register-box {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .register-box h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .register-box p {
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .register-input {
+        height: 36px;
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .register-button {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .register-button span {
+        font-size: 14px;
+        /* Giảm kích thước mũi tên trên màn hình nhỏ */
+    }
+
+    .ant-form-item {
+        margin-bottom: 12px;
+        /* Giảm khoảng cách giữa các trường trên màn hình nhỏ */
+    }
+
+    .ant-form-item:last-child {
+        margin-bottom: 0;
+        /* Đảm bảo phần cuối không có khoảng cách thừa */
+    }
+}

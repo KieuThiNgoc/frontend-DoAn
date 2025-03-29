@@ -1,0 +1,31 @@
+.ant-menu-horizontal {
+    display: flex;
+    justify-content: space-between; /* Đẩy các phần tử sang hai bên */
+    align-items: center;
+  }
+  
+  .ant-menu-horizontal > .ant-menu-item:first-child,
+  .ant-menu-horizontal > .ant-menu-submenu:first-child {
+    margin-right: auto; /* Đẩy mục đầu tiên (home) sang trái */
+  }
+  
+  .ant-menu-horizontal > .ant-menu-item:not(:first-child),
+  .ant-menu-horizontal > .ant-menu-submenu:not(:first-child) {
+    margin-left: 8px; /* Khoảng cách giữa các mục bên phải */
+  }
+  
+  /* Đảm bảo logo hoặc hình ảnh trong home không quá lớn */
+  .ant-menu-item img {
+    max-height: 40px; /* Điều chỉnh kích thước logo nếu cần */
+    vertical-align: middle;
+  }
+  
+  /* Tùy chỉnh thêm nếu cần */
+  .ant-menu-horizontal {
+    line-height: 64px; /* Đảm bảo chiều cao phù hợp */
+  }
+
+  /* Loại bỏ hiệu ứng gạch chân khi hover vào mục đầu tiên */
+  .ant-menu-horizontal > .ant-menu-item:first-child::after {
+    display: none;
+  }
