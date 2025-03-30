@@ -3,18 +3,18 @@ import { createContext, useState } from 'react';
 export const AuthContext = createContext({
     isAuthenticated: false,
     user: {
-        email: "",
-        name: ""
-    },
-    appLoading: true,
+        email: '',
+        name: '',
+        _id: ''
+    }
 });
 
 export const AuthWrapper = (props) => {
     const [auth, setAuth] = useState({
         isAuthenticated: false,
         user: {
-            email: "",
-            name: ""
+            email: '',
+            name: ''
         }
     });
 
@@ -22,7 +22,10 @@ export const AuthWrapper = (props) => {
 
     return (
         <AuthContext.Provider value={{
-            auth, setAuth, appLoading, setAppLoading
+            auth,
+            setAuth,
+            appLoading,
+            setAppLoading
         }}>
             {props.children}
         </AuthContext.Provider>
