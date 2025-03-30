@@ -69,7 +69,7 @@ const Header = () => {
                                 name: ""
                             }
                         })
-                        navigate("/");
+                        navigate("/login");
                     }}>Đăng xuất</span>,
                     key: 'logout',
                 }] : [
