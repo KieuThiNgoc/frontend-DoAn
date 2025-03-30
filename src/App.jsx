@@ -16,57 +16,68 @@ const AppContent = () => {
     const fetchAccount = async () => {
       setAppLoading(true);
       try {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+          setAppLoading(false);
+          return;
+        }
+
         const res = await axios.get(`/v1/api/account`);
         if (res && !res.message) {
           setAuth({
             isAuthenticated: true,
             user: {
               email: res.email,
-              name: res.name
+              name: res.name,
+              _id: res._id
             }
           });
-          if (location.pathname === '/login') {
-            navigate('/');
-          }
         } else {
+          localStorage.removeItem("access_token");
           setAuth({
             isAuthenticated: false,
             user: {
               email: '',
-              name: ''
+              name: '',
+              _id: ''
             }
           });
-          if (location.pathname !== '/login' && location.pathname !== '/register') {
-            navigate('/login');
-          }
         }
       } catch (error) {
         console.error("Error fetching account:", error);
+        localStorage.removeItem("access_token");
         setAuth({
           isAuthenticated: false,
           user: {
             email: '',
-            name: ''
+            name: '',
+            _id: ''
           }
         });
-        if (location.pathname !== '/login' && location.pathname !== '/register') {
-          navigate('/login');
-        }
       } finally {
         setAppLoading(false);
       }
     };
 
     fetchAccount();
-  }, []);
+  }, [setAuth, setAppLoading]);
 
   useEffect(() => {
-    if (auth.isAuthenticated && (location.pathname === '/login' || location.pathname === '/register')) {
-      navigate('/');
-    } else if (!auth.isAuthenticated && location.pathname !== '/login' && location.pathname !== '/register') {
-      navigate('/login');
+    if (appLoading) return;
+
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+    const token = localStorage.getItem("access_token");
+    
+    if (token && auth.isAuthenticated) {
+      if (isAuthPage) {
+        navigate('/', { replace: true });
+      }
+    } else if (!token || !auth.isAuthenticated) {
+      if (!isAuthPage) {
+        navigate('/login', { replace: true });
+      }
     }
-  }, [auth.isAuthenticated, location.pathname, navigate]);
+  }, [location.pathname, navigate, appLoading, auth.isAuthenticated]);
 
   useEffect(() => {
     if (!auth.isAuthenticated) return;

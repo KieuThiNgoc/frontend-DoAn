@@ -353,6 +353,7 @@ const AccountsPage = () => {
                         dataSource={filteredData}
                         columns={columns}
                         rowKey="_id"
+                        scroll={{ y: 'calc(100vh - 250px)' }}
                     />
                 </>
             )}

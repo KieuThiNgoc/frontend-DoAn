@@ -3,6 +3,7 @@ import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/ic
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { getTransactionsApi, createTransactionsApi, updateTransactionsApi, deleteTransactionsApi, getAccountApi, getCategoriesApi } from '../util/api';
 import dayjs from 'dayjs';
+import '../styles/transactions.css';
 import { AuthContext } from '../components/context/auth.context';
 import { NotificationContext } from '../components/context/notification.context';
 
@@ -382,10 +383,14 @@ const TransactionsPage = () => {
             ) : (
                 <>
                     <div style={{ 
-                        marginBottom: 16,
                         display: 'flex',
                         justifyContent: 'space-between',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 1,
+                        backgroundColor: '#f0f2f5',
+                        marginBottom: 16,
                     }}>
                         <Space>
                             <Radio.Group value={filterType} onChange={e => setFilterType(e.target.value)}>
@@ -595,6 +600,7 @@ const TransactionsPage = () => {
                         dataSource={filteredData}
                         columns={columns}
                         rowKey="_id"
+                        scroll={{ y: 'calc(100vh - 250px)' }}
                     />
                 </>
             )}

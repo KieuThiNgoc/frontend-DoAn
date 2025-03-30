@@ -236,6 +236,7 @@ const BudgetPage = () => {
         },
         {
             title: 'Danh mục',
+            width: '160px',
             dataIndex: 'categoryName',
         },
         {
@@ -408,6 +409,7 @@ const BudgetPage = () => {
                         dataSource={filteredData}
                         columns={columns}
                         rowKey="_id"
+                        scroll={{x: 'max-content', y: 'calc(100vh - 250px)' }}
                     />
                 </>
             )}
