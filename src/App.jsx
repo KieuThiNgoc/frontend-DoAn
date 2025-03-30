@@ -1,14 +1,16 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/layout/header";
-import axios from "./util/axios.customize"
-import { useContext, useEffect } from "react"
+import axios from "./util/axios.customize";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./components/context/auth.context";
+import { NotificationContext, NotificationProvider } from "./components/context/notification.context";
 import { Spin } from "antd";
 
-function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
+const AppContent = () => {
   const { setAuth, appLoading, setAppLoading, auth } = useContext(AuthContext);
+  const { addNotification } = useContext(NotificationContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -23,49 +25,100 @@ function App() {
               name: res.name
             }
           });
-          // Nếu đã đăng nhập và đang ở trang login, chuyển về trang chủ
           if (location.pathname === '/login') {
             navigate('/');
           }
         } else {
-          // Nếu chưa đăng nhập và không ở trang login, chuyển về trang login
+          setAuth({
+            isAuthenticated: false,
+            user: {
+              email: '',
+              name: ''
+            }
+          });
           if (location.pathname !== '/login' && location.pathname !== '/register') {
             navigate('/login');
           }
         }
       } catch (error) {
-        // Nếu có lỗi (chưa đăng nhập) và không ở trang login, chuyển về trang login
+        console.error("Error fetching account:", error);
+        setAuth({
+          isAuthenticated: false,
+          user: {
+            email: '',
+            name: ''
+          }
+        });
         if (location.pathname !== '/login' && location.pathname !== '/register') {
           navigate('/login');
         }
+      } finally {
+        setAppLoading(false);
       }
-      setAppLoading(false);
-    }
+    };
 
-    fetchAccount()
-  }, [location.pathname])
+    fetchAccount();
+  }, []);
+
+  useEffect(() => {
+    if (auth.isAuthenticated && (location.pathname === '/login' || location.pathname === '/register')) {
+      navigate('/');
+    } else if (!auth.isAuthenticated && location.pathname !== '/login' && location.pathname !== '/register') {
+      navigate('/login');
+    }
+  }, [auth.isAuthenticated, location.pathname, navigate]);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) return;
+
+    const interval = setInterval(() => {
+      addNotification(null);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [auth, addNotification]);
 
   return (
-    <div>
-      {appLoading === true ?
+    <>
+      {appLoading ? (
         <div style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)"
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '16px'
         }}>
-          <Spin />
+          <Spin size="large" />
+          <div>Vui lòng đợi nội dung đang tải!</div>
         </div>
-        :
-        <>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {auth.isAuthenticated && <Header />}
-          <div className="main-content">
+          <div style={{ 
+            flex: 1,
+            marginTop: auth.isAuthenticated ? '64px' : '0',
+            overflowY: 'auto',
+            height: auth.isAuthenticated ? 'calc(100vh - 64px)' : '100vh',
+            padding: '24px',
+            backgroundColor: '#f0f2f5'
+          }}>
             <Outlet />
           </div>
-        </>
-      }
-    </div>
-  )
+        </div>
+      )}
+    </>
+  );
+};
+
+function App() {
+  return (
+    <NotificationProvider>
+      <AppContent />
+    </NotificationProvider>
+  );
 }
 
-export default App
+export default App;

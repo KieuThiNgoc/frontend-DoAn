@@ -21,6 +21,7 @@ import AccountPage from './pages/accounts.jsx';
 import CategoryPage from './pages/categories.jsx';
 import BudgetPage from './pages/budget.jsx';
 import ReportPage from './pages/reports.jsx';
+import DashboardPage from './pages/dashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />
+      },
+      {
+        path: "dashboard",
+        element: <DashboardPage />
       },
       {
         path: "transactions",

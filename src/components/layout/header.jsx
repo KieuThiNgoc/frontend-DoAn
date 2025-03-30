@@ -1,16 +1,95 @@
 import React, { useContext, useState } from 'react';
-import { UsergroupAddOutlined, HomeOutlined, SettingOutlined, MenuOutlined } from '@ant-design/icons';
-import { Menu, Button, Drawer } from 'antd';
+import { 
+    MenuOutlined, 
+    HomeOutlined, 
+    BarChartOutlined, 
+    WalletOutlined, 
+    TagsOutlined, 
+    BankOutlined, 
+    TransactionOutlined, 
+    DashboardOutlined, 
+    BellOutlined,
+    UserOutlined 
+} from '@ant-design/icons';
+import { Menu, Button, Drawer, Avatar, Badge, List, Dropdown } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
+import { NotificationContext } from '../context/notification.context';
 import '../../styles/header.css'
 import logo from '../../assets/logo.svg'
 
 const Header = () => {
     const navigate = useNavigate();
     const { auth, setAuth } = useContext(AuthContext);
+    const { notifications, markAsRead, deleteNotification, clearNotifications } = useContext(NotificationContext);
     const [current, setCurrent] = useState('mail');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const handleLogout = () => {
+        localStorage.removeItem("access_token");
+        setAuth({
+            isAuthenticated: false,
+            user: { email: '', name: '' }
+        });
+        navigate("/login");
+    };
+
+    const notificationMenu = (
+        <Menu style={{ width: 350 }}>
+            {notifications.length > 0 ? (
+                <>
+                    <Menu.ItemGroup title="Thông báo">
+                        <List
+                            dataSource={notifications}
+                            renderItem={item => (
+                                <List.Item
+                                    style={{
+                                        backgroundColor: item.isRead ? '#fff' : '#f0f5ff',
+                                        padding: '8px 16px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start'
+                                    }}
+                                >
+                                    <div style={{ width: '100%' }}>
+                                        <p style={{ margin: 0 }}>{item.message}</p>
+                                        <span style={{ fontSize: '12px', color: '#888' }}>
+                                            {new Date(item.timestamp).toLocaleString()}
+                                        </span>
+                                    </div>
+                                    <div style={{ marginTop: '8px' }}>
+                                        <Button
+                                            type="link"
+                                            onClick={() => markAsRead(item.id)}
+                                            disabled={item.isRead}
+                                            style={{ padding: 0, marginRight: '16px' }}
+                                        >
+                                            Đánh dấu đã đọc
+                                        </Button>
+                                        <Button
+                                            type="link"
+                                            danger
+                                            onClick={() => deleteNotification(item.id)}
+                                            style={{ padding: 0 }}
+                                        >
+                                            Xóa
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            )}
+                            style={{ maxHeight: '300px', overflowY: 'auto' }}
+                        />
+                    </Menu.ItemGroup>
+                    <Menu.Divider />
+                    <Menu.Item key="clear" onClick={clearNotifications}>
+                        Xóa tất cả thông báo
+                    </Menu.Item>
+                </>
+            ) : (
+                <Menu.Item key="no-noti">Không có thông báo</Menu.Item>
+            )}
+        </Menu>
+    );
 
     const items = [
         {
@@ -19,65 +98,66 @@ const Header = () => {
             icon: null,
         },
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/reports"}>Báo cáo</Link>,
+            label: <Link to={"/reports"} style={{ textDecoration: 'none' }}>Báo cáo</Link>,
             key: 'reports',
-            icon: <UsergroupAddOutlined />,
+            icon: <BarChartOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/budgets"}>Ngân sách</Link>,
+            label: <Link to={"/budgets"} style={{ textDecoration: 'none' }}>Ngân sách</Link>,
             key: 'budgets',
-            icon: <UsergroupAddOutlined />,
+            icon: <WalletOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/categories"}>Danh mục</Link>,
+            label: <Link to={"/categories"} style={{ textDecoration: 'none' }}>Danh mục</Link>,
             key: 'categories',
-            icon: <UsergroupAddOutlined />,
+            icon: <TagsOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/accounts"}>Tài khoản</Link>,
+            label: <Link to={"/accounts"} style={{ textDecoration: 'none' }}>Tài khoản</Link>,
             key: 'accounts',
-            icon: <UsergroupAddOutlined />,
+            icon: <BankOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/transactions"}>Giao dịch</Link>,
+            label: <Link to={"/transactions"} style={{ textDecoration: 'none' }}>Giao dịch</Link>,
             key: 'transactions',
-            icon: <UsergroupAddOutlined />,
+            icon: <TransactionOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/dashboard"}>Tổng quan</Link>,
+            label: <Link to={"/dashboard"} style={{ textDecoration: 'none' }}>Tổng quan</Link>,
             key: 'dashboard',
-            icon: <UsergroupAddOutlined />,
+            icon: <DashboardOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
-            label: <Link to={"/notifications"}>Thông báo</Link>,
+            label: (
+                <Dropdown overlay={notificationMenu} trigger={['click']}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <Badge size='small' count={notifications.filter(n => !n.isRead).length}>
+                            <BellOutlined
+                                style={{
+                                    fontSize: '18px',
+                                    color: current === 'notifications' ? '#1890ff' : 'inherit'
+                                }}
+                            />
+                        </Badge>
+                        <span>Thông báo</span>
+                    </div>
+                </Dropdown>
+            ),
             key: 'notifications',
-            icon: <UsergroupAddOutlined />,
+            icon: null,
         }] : []),
         {
-            label: auth.isAuthenticated ? `Xin chào, ${auth?.user?.name ?? ""}` : 'Tài khoản',
+            label: auth.isAuthenticated ? `Xin chào, ${auth?.user?.name ?? ''}` : 'Tài khoản',
             key: 'SubMenu',
-            icon: <SettingOutlined />,
+            icon: <UserOutlined />,
             children: [
                 ...(auth.isAuthenticated ? [{
-                    label: <span onClick={() => {
-                        localStorage.clear("access_token");
-                        setCurrent("home");
-                        setAuth({
-                            isAuthenticated: false,
-                            user: {
-                                email: "",
-                                name: ""
-                            }
-                        })
-                        navigate("/login");
-                    }}>Đăng xuất</span>,
+                    label: <span onClick={handleLogout}>Đăng xuất</span>,
                     key: 'logout',
-                }] : [
-                    {
-                        label: <Link to={"/login"}>Đăng nhập</Link>,
-                        key: 'login',
-                    }
-                ]),
+                }] : [{
+                    label: <Link to={"/login"}>Đăng nhập</Link>,
+                    key: 'login',
+                }]),
             ],
         },
     ];
