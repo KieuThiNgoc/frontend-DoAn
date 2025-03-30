@@ -130,6 +130,16 @@ const deleteNotificationApi = (notificationId) => {
     return axios.delete(URL_API);
 };
 
+const getReportsBarChartApi = (startDate, endDate) => {
+    const URL_API = "/v1/api/reports/bar";
+    return axios.get(URL_API, { params: { startDate, endDate } });
+};
+
+const getReportsPieChartApi = (startDate, endDate) => {
+    const URL_API = "/v1/api/reports/pie";
+    return axios.get(URL_API, { params: { startDate, endDate } });
+};
+
 export {
     createUserApi, 
     loginApi, 
@@ -152,5 +162,7 @@ export {
     deleteBudgetsApi,
     getNotificationsApi,
     markNotificationAsReadApi,
-    deleteNotificationApi
+    deleteNotificationApi,
+    getReportsBarChartApi,
+    getReportsPieChartApi
 }
