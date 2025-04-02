@@ -130,23 +130,28 @@ const deleteNotificationApi = (notificationId) => {
     return axios.delete(URL_API);
 };
 
-const getReportsBarChartApi = (startDate, endDate) => {
-    const URL_API = "/v1/api/reports/bar";
-    return axios.get(URL_API, { params: { startDate, endDate } });
-};
-
 const getReportsPieChartApi = (startDate, endDate) => {
     const URL_API = "/v1/api/reports/pie";
     return axios.get(URL_API, { params: { startDate, endDate } });
 };
 
+const getDashboardTableApi = (year) => {
+    const URL_API = "/v1/api/dashboard/table";
+    return axios.get(URL_API, { params: { year } });
+};
+
+const getDashboardBarChartApi = (year) => {
+    const URL_API = "/v1/api/dashboard/barchart";
+    return axios.get(URL_API, { params: { year } });
+};
+
 export {
-    createUserApi, 
-    loginApi, 
-    getUserApi, 
-    getAccountApi, 
-    createAccountApi, 
-    updateAccountApi, 
+    createUserApi,
+    loginApi,
+    getUserApi,
+    getAccountApi,
+    createAccountApi,
+    updateAccountApi,
     deleteAccountApi,
     getCategoriesApi,
     createCategoriesApi,
@@ -163,6 +168,7 @@ export {
     getNotificationsApi,
     markNotificationAsReadApi,
     deleteNotificationApi,
-    getReportsBarChartApi,
-    getReportsPieChartApi
+    getReportsPieChartApi,
+    getDashboardTableApi,
+    getDashboardBarChartApi
 }

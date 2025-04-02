@@ -31,7 +31,7 @@ const LoginPage = () => {
                     name: res?.user?.name ?? ""
                 }
             });
-            navigate("/");
+            navigate("/dashboard");
         } else {
             notification.error({
                 message: "ĐĂNG NHẬP",
