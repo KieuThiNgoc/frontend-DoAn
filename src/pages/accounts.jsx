@@ -221,7 +221,7 @@ const AccountsPage = () => {
     const filteredData = useMemo(() => {
         return dataSource.filter(item => {
             const keyword = searchKeyword.toLowerCase().trim();
-            return !keyword || 
+            return !keyword ||
                 (item.name?.toLowerCase() || '').includes(keyword) ||
                 (item.isCash ? 'offline' : 'online').toLowerCase().includes(keyword);
         });
@@ -232,7 +232,7 @@ const AccountsPage = () => {
     };
 
     return (
-        <>
+        <div style={{ padding: 20 }}>
             {isLoading ? (
                 <div style={{
                     position: 'fixed',
@@ -249,7 +249,7 @@ const AccountsPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{ 
+                    <div style={{
                         marginBottom: 16,
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -357,7 +357,7 @@ const AccountsPage = () => {
                     />
                 </>
             )}
-        </>
+        </div>
     );
 };
 

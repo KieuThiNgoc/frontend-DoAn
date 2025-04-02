@@ -175,7 +175,7 @@ const CategoriesPage = () => {
     const filteredData = useMemo(() => {
         return dataSource.filter(item => {
             const keyword = searchKeyword.toLowerCase().trim();
-            return !keyword || 
+            return !keyword ||
                 (item.name?.toLowerCase() || '').includes(keyword) ||
                 (item.type === 'expense' ? 'chi tiêu' : 'thu nhập').toLowerCase().includes(keyword);
         });
@@ -227,7 +227,7 @@ const CategoriesPage = () => {
     ];
 
     return (
-        <>
+        <div style={{ padding: 24 }}>
             {isLoading ? (
                 <div style={{
                     position: 'fixed',
@@ -244,7 +244,7 @@ const CategoriesPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{ 
+                    <div style={{
                         marginBottom: 16,
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -331,7 +331,7 @@ const CategoriesPage = () => {
                     />
                 </>
             )}
-        </>
+        </div>
     );
 };
 

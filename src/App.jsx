@@ -67,13 +67,14 @@ const AppContent = () => {
 
     const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
     const token = localStorage.getItem("access_token");
-    
+    const isProtectedRoute = ['/dashboard', '/transactions', '/accounts', '/categories', '/budgets', '/reports'].includes(location.pathname);
+
     if (token && auth.isAuthenticated) {
       if (isAuthPage) {
         navigate('/', { replace: true });
       }
     } else if (!token || !auth.isAuthenticated) {
-      if (!isAuthPage) {
+      if (isProtectedRoute) {
         navigate('/login', { replace: true });
       }
     }
@@ -106,15 +107,13 @@ const AppContent = () => {
           <div>Vui lòng đợi nội dung đang tải!</div>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          {auth.isAuthenticated && <Header />}
-          <div style={{ 
-            flex: 1,
-            marginTop: auth.isAuthenticated ? '64px' : '0',
-            overflowY: 'auto',
-            height: auth.isAuthenticated ? 'calc(100vh - 64px)' : '100vh',
-            padding: '24px',
-            backgroundColor: '#f0f2f5'
+        <div>
+          <Header />
+          <div style={{
+            marginTop: '64px', // Đẩy nội dung xuống dưới header cố định
+            // padding: '24px',
+            backgroundColor: '#f0f2f5',
+            minHeight: 'calc(100vh - 64px)' // Đảm bảo nội dung tối thiểu bằng màn hình trừ header
           }}>
             <Outlet />
           </div>

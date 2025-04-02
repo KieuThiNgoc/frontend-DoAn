@@ -367,7 +367,7 @@ const TransactionsPage = () => {
     };
 
     return (
-        <>
+        <div style={{ padding: 20 }}>
             {isLoading ? (
                 <div style={{
                     position: 'fixed',
@@ -384,7 +384,7 @@ const TransactionsPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{ 
+                    <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
@@ -606,7 +606,7 @@ const TransactionsPage = () => {
                     />
                 </>
             )}
-        </>
+        </div>
     );
 };
 

@@ -118,7 +118,7 @@ const ReportPage = () => {
     ];
 
     return (
-        <div className="report-page-container">
+        <div className="report-page-container" style={{ padding: 24 }}>
             <Form
                 form={form}
                 onFinish={onFinish}
@@ -225,8 +225,8 @@ const ReportPage = () => {
 
                     <Row gutter={16} style={{ marginTop: 24 }}>
                         <Col span={12}>
-                            <Card 
-                                title="Danh sách các khoản thu" 
+                            <Card
+                                title="Danh sách các khoản thu"
                                 className="chart-card"
                                 bodyStyle={{ height: '100%', padding: '24px' }} // Đảm bảo body full Card
                             >
@@ -241,8 +241,8 @@ const ReportPage = () => {
                             </Card>
                         </Col>
                         <Col span={12}>
-                            <Card 
-                                title="Danh sách các khoản chi" 
+                            <Card
+                                title="Danh sách các khoản chi"
                                 className="chart-card"
                                 bodyStyle={{ height: '100%', padding: '24px' }} // Đảm bảo body full Card
                             >

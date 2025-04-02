@@ -1,0 +1,13 @@
+html {
+    scroll-behavior: smooth;
+    overflow-y: auto
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}

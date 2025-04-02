@@ -218,7 +218,7 @@ const BudgetPage = () => {
     const filteredData = useMemo(() => {
         return dataSource.filter(item => {
             const keyword = searchKeyword.toLowerCase().trim();
-            return !keyword || 
+            return !keyword ||
                 (item.categoryName?.toLowerCase() || '').includes(keyword);
         });
     }, [dataSource, searchKeyword]);
@@ -295,7 +295,7 @@ const BudgetPage = () => {
     ];
 
     return (
-        <>
+        <div style={{ padding: 24 }}>
             {isLoading ? (
                 <div style={{
                     position: 'fixed',
@@ -312,7 +312,7 @@ const BudgetPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{ 
+                    <div style={{
                         marginBottom: 16,
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -409,11 +409,11 @@ const BudgetPage = () => {
                         dataSource={filteredData}
                         columns={columns}
                         rowKey="_id"
-                        scroll={{x: 'max-content', y: 'calc(100vh - 250px)' }}
+                        scroll={{ x: 'max-content', y: 'calc(100vh - 250px)' }}
                     />
                 </>
             )}
-        </>
+        </div>
     );
 };
 

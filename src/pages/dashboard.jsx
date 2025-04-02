@@ -20,7 +20,7 @@ const DashboardPage = () => {
   return (
     <div
       style={{
-        padding: 0,
+        padding: '24px',
         minHeight: '85vh', // Trừ đi 20px trên và 20px dưới
         backgroundColor: '#f0f2f5', // Màu nền nhẹ
         display: 'flex',
