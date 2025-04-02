@@ -11,3 +11,63 @@ section {
     text-align: center;
     padding: 20px;
 }
+
+#home {
+    background: #0cc0df;
+}
+
+#home .ant-typography {
+    color: #fff;
+}
+
+#home img {
+    maxWidth: 100%;
+    height: auto;
+}
+
+/* Style cho section Tính năng */
+#about {
+    background: #fff1f0;
+}
+
+#about .ant-typography {
+    color: #333;
+}
+
+#about img {
+    maxWidth: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    #home {
+        padding: 20px;
+    }
+
+    #home>div {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+
+    #home>div>div:first-child {
+        margin-bottom: 24px;
+    }
+
+    #home .ant-typography h1 {
+        font-size: 32px !important;
+    }
+
+    #home .ant-typography p {
+        fontSize: 16px !important;
+    }
+
+    /* Responsive cho section Tính năng */
+    #about>div {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    #about .ant-typography h4 {
+        font-size: 16px !important;
+    }
+}

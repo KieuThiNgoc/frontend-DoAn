@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { notification, Button, Form, DatePicker, Card, Row, Col, Table } from 'antd';
+import { notification, Button, Form, DatePicker, Card, Row, Col, Table, Result } from 'antd';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip as RechartsTooltip } from 'recharts';
 import { getReportsPieChartApi } from '../util/api';
 import '../styles/reports.css';
@@ -179,9 +179,11 @@ const ReportPage = () => {
                                         </PieChart>
                                     </ResponsiveContainer>
                                 ) : (
-                                    <p style={{ textAlign: 'center', color: '#999' }}>
-                                        Không có dữ liệu thu nhập trong khoảng thời gian này
-                                    </p>
+                                    <Result
+                                        status="404"
+                                        subTitle="Không có dữ liệu thu nhập trong khoảng thời gian này"
+                                    />
+
                                 )}
                             </Card>
                         </Col>
@@ -215,9 +217,10 @@ const ReportPage = () => {
                                         </PieChart>
                                     </ResponsiveContainer>
                                 ) : (
-                                    <p style={{ textAlign: 'center', color: '#999' }}>
-                                        Không có dữ liệu chi tiêu trong khoảng thời gian này
-                                    </p>
+                                    <Result
+                                        status="404"
+                                        subTitle="Không có dữ liệu thu nhập trong khoảng thời gian này"
+                                    />
                                 )}
                             </Card>
                         </Col>

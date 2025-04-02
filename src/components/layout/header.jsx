@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
     MenuOutlined,
     HomeOutlined,
@@ -10,7 +10,6 @@ import {
     BellOutlined,
     UserOutlined,
     InfoCircleOutlined,
-    AppstoreOutlined
 } from '@ant-design/icons';
 import { Menu, Button, Drawer, Badge, List, Dropdown } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -27,6 +26,34 @@ const Header = () => {
     const [current, setCurrent] = useState('home');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+    // Xử lý cuộn và cập nhật tab đang chọn
+    useEffect(() => {
+        const isHomePage = location.pathname === '/' && !auth.isAuthenticated;
+        if (!isHomePage) return;
+
+        const sections = ['home', 'features']; // Xóa 'features'
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + 100; // Offset để tab thay đổi sớm hơn một chút
+            let activeSection = 'home';
+
+            for (const section of sections) {
+                const element = document.getElementById(section);
+                if (element) {
+                    const { offsetTop, offsetHeight } = element;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                        activeSection = section;
+                        break;
+                    }
+                }
+            }
+
+            setCurrent(activeSection);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [location.pathname, auth.isAuthenticated]);
+
     const handleLogout = () => {
         localStorage.removeItem("access_token");
         setAuth({
@@ -39,7 +66,30 @@ const Header = () => {
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            const header = document.querySelector('.ant-menu-horizontal');
+            const headerHeight = header ? header.offsetHeight : 64; // Chiều cao header
+            const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 800;
+            let startTime = null;
+
+            const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+
+            const animation = (currentTime) => {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const ease = easeInOutQuad(progress);
+
+                window.scrollTo(0, startPosition + distance * ease);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            };
+
+            requestAnimationFrame(animation);
         }
     };
 
@@ -176,15 +226,9 @@ const Header = () => {
             onClick: () => scrollToSection('home'),
         },
         {
-            label: 'Giới thiệu',
-            key: 'about',
-            icon: <InfoCircleOutlined />,
-            onClick: () => scrollToSection('about'),
-        },
-        {
             label: 'Tính năng',
             key: 'features',
-            icon: <AppstoreOutlined />,
+            icon: <InfoCircleOutlined />,
             onClick: () => scrollToSection('features'),
         },
         {

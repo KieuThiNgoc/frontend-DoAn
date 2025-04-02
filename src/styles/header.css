@@ -103,6 +103,22 @@
   /* Đẩy nút đăng nhập sang phải khi chưa đăng nhập */
 }
 
+/* Xóa gạch chân khi hover vào tab Đăng nhập */
+.ant-menu-item[data-menu-id$="login"]::after,
+.ant-menu-item[data-menu-id$="login"]:hover::after {
+  display: none !important;
+}
+
+.ant-menu-item[data-menu-id$="login"],
+.ant-menu-item[data-menu-id$="login"]:hover {
+  border-bottom: none !important;
+}
+
+.ant-menu-item[data-menu-id$="login"] .ant-btn,
+.ant-menu-item[data-menu-id$="login"] .ant-btn:hover {
+  text-decoration: none !important;
+}
+
 @media screen and (max-width: 1240px) {
   .mobile-menu-button {
     display: block;
