@@ -122,12 +122,13 @@ const TransactionsPage = () => {
         form.validateFields()
             .then(async (values) => {
                 try {
+                    const dateToSend = values.date ? values.date.format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD');
                     const res = await createTransactionsApi(
                         values.amount,
                         values.type,
                         values.accountId,
                         values.categoryId,
-                        values.date.format('YYYY-MM-DD'),
+                        dateToSend,
                         values.description
                     );
                     if (res && res.EC === 0) {
@@ -186,13 +187,14 @@ const TransactionsPage = () => {
         editForm.validateFields()
             .then(async (values) => {
                 try {
+                    const dateToSend = values.date ? values.date.format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD');
                     const res = await updateTransactionsApi(
                         editingRecord._id,
                         values.amount,
                         values.type,
                         values.accountId,
                         values.categoryId,
-                        values.date.format('YYYY-MM-DD'),
+                        dateToSend,
                         values.description
                     );
                     if (res && res.EC === 0) {
@@ -490,7 +492,7 @@ const TransactionsPage = () => {
                             <Form.Item
                                 name="date"
                                 label="Ngày và giờ"
-                                rules={[{ required: true, message: 'Vui lòng chọn ngày và giờ!' }]}
+                                initialValue={dayjs()}
                             >
                                 <DatePicker
                                     style={{ width: '100%' }}
@@ -579,12 +581,12 @@ const TransactionsPage = () => {
                             <Form.Item
                                 name="date"
                                 label="Ngày và giờ"
-                                rules={[{ required: true, message: 'Vui lòng chọn ngày và giờ!' }]}
                             >
                                 <DatePicker
                                     style={{ width: '100%' }}
                                     format="DD/MM/YYYY HH:mm"
                                     showTime={{ format: 'HH:mm' }}
+                                    defaultValue={dayjs()}
                                 />
                             </Form.Item>
                             <Form.Item
