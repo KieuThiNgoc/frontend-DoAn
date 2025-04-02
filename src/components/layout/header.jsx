@@ -93,8 +93,8 @@ const Header = () => {
 
     const items = [
         {
-            label: <Link to={"/"}><img src={logo} alt="Logo" /></Link>,
-            key: 'home',
+            label: <Link to={"/dashboard"}><img src={logo} alt="Logo"/></Link>,
+            key: 'dashboard',
             icon: null,
         },
         ...(auth.isAuthenticated ? [{
@@ -121,11 +121,6 @@ const Header = () => {
             label: <Link to={"/transactions"} style={{ textDecoration: 'none' }}>Giao dịch</Link>,
             key: 'transactions',
             icon: <TransactionOutlined />,
-        }] : []),
-        ...(auth.isAuthenticated ? [{
-            label: <Link to={"/dashboard"} style={{ textDecoration: 'none' }}>Tổng quan</Link>,
-            key: 'dashboard',
-            icon: <DashboardOutlined />,
         }] : []),
         ...(auth.isAuthenticated ? [{
             label: (
