@@ -155,7 +155,7 @@ const ReportPage = () => {
             >
                 <Form.Item
                     name="dateRange"
-                    label="Khoảng thời gian"
+                    label="Thời gian"
                     rules={[{ required: true, message: 'Vui lòng chọn khoảng thời gian' }]}
                 >
                     <RangePicker format="DD/MM/YYYY" disabled={loading} style={{ width: 240 }} />

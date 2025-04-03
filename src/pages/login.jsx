@@ -65,7 +65,7 @@ const LoginPage = () => {
                 </Col>
 
                 {/* Bên phải: Form đăng nhập */}
-                <Col xs={24} md={12} style={{ padding: '40px' }}>
+                <Col xs={24} md={12} style={{ padding: '20px' }}>
                     <div style={{
                         maxWidth: '400px',
                         margin: '0 auto',

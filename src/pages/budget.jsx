@@ -5,6 +5,7 @@ import { getBudgetsApi, createBudgetsApi, updateBudgetsApi, deleteBudgetsApi, ge
 import { AuthContext } from '../components/context/auth.context';
 import { NotificationContext } from '../components/context/notification.context';
 import dayjs from 'dayjs';
+import '../styles/budget.css';
 
 const { RangePicker } = DatePicker;
 
@@ -312,21 +313,17 @@ const BudgetPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{
-                        marginBottom: 16,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
+                    <div className="filter-bar" style={{
+                        marginBottom: 16
                     }}>
-                        <Space>
+                        <div>
                             <Input
                                 placeholder="Tìm kiếm theo tên danh mục"
                                 value={searchKeyword}
                                 onChange={handleSearchChange}
-                                style={{ width: 300 }}
                                 allowClear
                             />
-                        </Space>
+                        </div>
 
                         <Button type="primary" onClick={showModal} style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}>
                             <PlusCircleOutlined /> Thêm ngân sách

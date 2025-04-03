@@ -3,6 +3,7 @@ import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/ic
 import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { getCategoriesApi, createCategoriesApi, updateCategoriesApi, deleteCategoriesApi } from '../util/api';
 import { AuthContext } from '../components/context/auth.context';
+import '../styles/categories.css';
 
 const CategoriesPage = () => {
     const { auth } = useContext(AuthContext);
