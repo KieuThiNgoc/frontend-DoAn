@@ -254,7 +254,7 @@ const ReportPage = () => {
                         </Col>
                     </Row>
 
-                    <Row gutter={16} style={{ marginTop: 24 }}>
+                    <Row gutter={16}>
                         <Col span={12}>
                             <Card
                                 title="Danh sách các khoản thu"

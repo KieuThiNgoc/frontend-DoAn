@@ -1,69 +1,129 @@
+/* reports.css */
+
 /* Định nghĩa các biến màu */
 :root {
-    --income-color: #13c2c2; /* Màu xanh dương cho "Thu nhập" */
-    --expense-color: #ff4d4f; /* Màu đỏ cho "Chi tiêu" */
+    --income-color: #13c2c2;
+    /* Màu xanh dương cho "Thu nhập" */
+    --expense-color: #ff4d4f;
+    /* Màu đỏ cho "Chi tiêu" */
 }
 
 /* Container chính của trang với scroll */
 .report-page-container {
-    max-height: 100vh; /* Giới hạn chiều cao tối đa bằng chiều cao màn hình */
-    overflow-y: auto; /* Cho phép cuộn dọc khi nội dung vượt quá */
-    padding: 16px; /* Thêm padding để nội dung không sát mép */
+    max-height: 100vh;
+    /* Giới hạn chiều cao tối đa bằng chiều cao màn hình */
+    overflow-y: auto;
+    /* Cho phép cuộn dọc khi nội dung vượt quá */
+    padding: 16px;
+    /* Thêm padding để nội dung không sát mép */
 }
 
-/* Container chứa nội dung báo cáo */
-.report-content {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Container chứa hai biểu đồ */
-.chart-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px; 
-    margin-bottom: 100px;
-}
-
-/* Card chứa biểu đồ */
+/* Card chứa biểu đồ hoặc bảng */
 .chart-card {
-    height: 500px; /* Chiều cao cố định cho cả hai biểu đồ */
-}
-
-/* Card chứa biểu đồ cột (chiếm 2/3 chiều rộng) */
-.chart-card.column-chart {
-    flex: 2; /* Chiếm 2/3 không gian */
-}
-
-/* Card chứa biểu đồ tròn (chiếm 1/3 chiều rộng) */
-.chart-card.pie-chart {
-    flex: 1; /* Chiếm 1/3 không gian */
+    height: 500px;
+    /* Chiều cao cố định cho card trên desktop */
+    margin-bottom: 24px;
+    /* Khoảng cách giữa các card */
 }
 
 /* Đảm bảo nội dung bên trong Card chiếm toàn bộ chiều cao */
 .chart-card .ant-card-body {
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    /* Đảm bảo nội dung trong card xếp dọc */
     justify-content: center;
+    /* Căn giữa nội dung theo chiều dọc */
+    align-items: center;
+    /* Căn giữa nội dung theo chiều ngang */
+    overflow: hidden;
+    /* Ngăn nội dung tràn ra ngoài */
 }
 
-/* Responsive cho màn hình nhỏ */
+/* Giới hạn kích thước của Result */
+.chart-card .ant-result {
+    max-height: 100%;
+    /* Không vượt quá chiều cao của card */
+    max-width: 100%;
+    /* Không vượt quá chiều rộng của card */
+    padding: 16px;
+    /* Giảm padding để vừa với card */
+    text-align: center;
+    /* Căn giữa nội dung */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Căn giữa các phần tử trong Result */
+    overflow: hidden;
+    /* Ngăn tràn nội dung */
+}
+
+/* Giới hạn kích thước của title và subTitle trong Result */
+.chart-card .ant-result-title {
+    font-size: 20px;
+    /* Giảm kích thước chữ của title nếu cần */
+    margin: 0;
+    /* Loại bỏ margin mặc định */
+    overflow: hidden;
+    /* Ngăn tràn */
+    text-overflow: ellipsis;
+    /* Thêm dấu "..." nếu chữ quá dài */
+    white-space: nowrap;
+    /* Giữ title trên một dòng */
+}
+
+.chart-card .ant-result-subtitle {
+    font-size: 14px;
+    /* Giảm kích thước chữ của subTitle */
+    margin: 8px 0 0 0;
+    /* Điều chỉnh margin */
+    overflow: hidden;
+    /* Ngăn tràn */
+    text-overflow: ellipsis;
+    /* Thêm dấu "..." nếu chữ quá dài */
+    white-space: nowrap;
+    /* Giữ subTitle trên một dòng */
+}
+
+/* Responsive cho màn hình nhỏ (dưới 768px) */
 @media (max-width: 768px) {
     .report-page-container {
-        padding: 8px; /* Giảm padding trên mobile */
-    }
-
-    .chart-container {
-        flex-direction: column;
+        padding: 8px;
+        /* Giảm padding trên mobile */
     }
 
     .chart-card {
-        height: 400px; /* Giảm chiều cao trên màn hình nhỏ */
+        height: 400px;
+        /* Giảm chiều cao trên màn hình nhỏ */
+        margin-bottom: 16px;
+        /* Giảm khoảng cách giữa các card */
     }
 
-    .chart-card.column-chart,
-    .chart-card.pie-chart {
-        flex: 1; /* Trên màn hình nhỏ, cả hai biểu đồ chiếm toàn bộ chiều rộng */
+    .ant-row {
+        flex-direction: column;
+        /* Chuyển Row sang column */
+    }
+
+    .ant-col {
+        width: 100%;
+        /* Col chiếm toàn bộ chiều rộng */
+        max-width: 100%;
+        /* Đảm bảo không vượt quá container */
+    }
+
+    /* Điều chỉnh Result trên mobile */
+    .chart-card .ant-result {
+        padding: 8px;
+        /* Giảm padding hơn nữa trên mobile */
+    }
+
+    .chart-card .ant-result-title {
+        font-size: 18px;
+        /* Giảm kích thước title trên mobile */
+    }
+
+    .chart-card .ant-result-subtitle {
+        font-size: 12px;
+        /* Giảm kích thước subTitle trên mobile */
     }
 }
