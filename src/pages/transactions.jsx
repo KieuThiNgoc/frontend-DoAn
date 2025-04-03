@@ -27,7 +27,7 @@ const TransactionsPage = () => {
 
     const typeOptions = [
         { value: 'expense', label: 'Chi tiêu' },
-        { value: 'income', label: 'Thu nhập' }
+        { value: 'income', label: 'Thu nhập' },
     ];
 
     const fetchTransactions = async (startDate, endDate) => {
@@ -41,17 +41,11 @@ const TransactionsPage = () => {
             if (!res?.message) {
                 setDataSource(res);
             } else {
-                notification.error({
-                    message: "Unauthorized",
-                    description: res.message
-                });
+                notification.error({ message: "Unauthorized", description: res.message });
                 setDataSource([]);
             }
         } catch (error) {
-            notification.error({
-                message: "Error",
-                description: "Failed to fetch transactions"
-            });
+            notification.error({ message: "Error", description: "Failed to fetch transactions" });
             setDataSource([]);
         } finally {
             setIsLoading(false);
@@ -69,15 +63,12 @@ const TransactionsPage = () => {
                 const accountOptions = res.map(account => ({
                     value: account._id,
                     label: account.name,
-                    balance: account.balance
+                    balance: account.balance,
                 }));
                 setAccounts(accountOptions);
             }
         } catch (error) {
-            notification.error({
-                message: "Error",
-                description: "Failed to fetch accounts"
-            });
+            notification.error({ message: "Error", description: "Failed to fetch accounts" });
             setAccounts([]);
         }
     };
@@ -93,15 +84,12 @@ const TransactionsPage = () => {
                 const categoryOptions = res.map(category => ({
                     value: category._id,
                     label: category.name,
-                    type: category.type
+                    type: category.type,
                 }));
                 setCategories(categoryOptions);
             }
         } catch (error) {
-            notification.error({
-                message: "Error",
-                description: "Failed to fetch categories"
-            });
+            notification.error({ message: "Error", description: "Failed to fetch categories" });
             setCategories([]);
         }
     };
@@ -132,36 +120,20 @@ const TransactionsPage = () => {
                         values.description
                     );
                     if (res && res.EC === 0) {
-                        notification.success({
-                            message: "Thành công",
-                            description: res.EM
-                        });
-                        if (res.notification) {
-                            addNotification(res.notification);
-                        }
+                        notification.success({ message: "Thành công", description: res.EM });
+                        if (res.notification) addNotification(res.notification);
                         setIsModalOpen(false);
                         form.resetFields();
-                        await fetchTransactions(
-                            dateRange[0]?.format('YYYY-MM-DD'),
-                            dateRange[1]?.format('YYYY-MM-DD')
-                        );
+                        await fetchTransactions(dateRange[0]?.format('YYYY-MM-DD'), dateRange[1]?.format('YYYY-MM-DD'));
                         await fetchAccounts();
                     } else {
-                        notification.error({
-                            message: "Thất bại",
-                            description: res?.EM || "Không thể tạo giao dịch"
-                        });
+                        notification.error({ message: "Thất bại", description: res?.EM || "Không thể tạo giao dịch" });
                     }
                 } catch (error) {
-                    notification.error({
-                        message: "Lỗi",
-                        description: "Đã xảy ra lỗi khi tạo giao dịch"
-                    });
+                    notification.error({ message: "Lỗi", description: "Đã xảy ra lỗi khi tạo giao dịch" });
                 }
             })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
+            .catch(info => console.log('Validate Failed:', info));
     };
 
     const handleCancel = () => {
@@ -178,7 +150,7 @@ const TransactionsPage = () => {
             accountId: record.accountId,
             categoryId: record.categoryId,
             date: dayjs(record.date),
-            description: record.description
+            description: record.description,
         });
         setIsEditModalOpen(true);
     };
@@ -198,37 +170,21 @@ const TransactionsPage = () => {
                         values.description
                     );
                     if (res && res.EC === 0) {
-                        notification.success({
-                            message: "Thành công",
-                            description: res.EM
-                        });
-                        if (res.notification) {
-                            addNotification(res.notification);
-                        }
+                        notification.success({ message: "Thành công", description: res.EM });
+                        if (res.notification) addNotification(res.notification);
                         setIsEditModalOpen(false);
                         setEditingRecord(null);
                         editForm.resetFields();
-                        await fetchTransactions(
-                            dateRange[0]?.format('YYYY-MM-DD'),
-                            dateRange[1]?.format('YYYY-MM-DD')
-                        );
+                        await fetchTransactions(dateRange[0]?.format('YYYY-MM-DD'), dateRange[1]?.format('YYYY-MM-DD'));
                         await fetchAccounts();
                     } else {
-                        notification.error({
-                            message: "Thất bại",
-                            description: res?.EM || "Không thể cập nhật giao dịch"
-                        });
+                        notification.error({ message: "Thất bại", description: res?.EM || "Không thể cập nhật giao dịch" });
                     }
                 } catch (error) {
-                    notification.error({
-                        message: "Lỗi",
-                        description: "Đã xảy ra lỗi khi cập nhật giao dịch"
-                    });
+                    notification.error({ message: "Lỗi", description: "Đã xảy ra lỗi khi cập nhật giao dịch" });
                 }
             })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
+            .catch(info => console.log('Validate Failed:', info));
     };
 
     const handleEditCancel = () => {
@@ -248,29 +204,15 @@ const TransactionsPage = () => {
                 try {
                     const res = await deleteTransactionsApi(record._id);
                     if (res && res.EC === 0) {
-                        notification.success({
-                            message: "Thành công",
-                            description: res.EM
-                        });
-                        if (res.notification) {
-                            addNotification(res.notification);
-                        }
-                        await fetchTransactions(
-                            dateRange[0]?.format('YYYY-MM-DD'),
-                            dateRange[1]?.format('YYYY-MM-DD')
-                        );
+                        notification.success({ message: "Thành công", description: res.EM });
+                        if (res.notification) addNotification(res.notification);
+                        await fetchTransactions(dateRange[0]?.format('YYYY-MM-DD'), dateRange[1]?.format('YYYY-MM-DD'));
                         await fetchAccounts();
                     } else {
-                        notification.error({
-                            message: "Thất bại",
-                            description: res?.EM || "Không thể xóa giao dịch"
-                        });
+                        notification.error({ message: "Thất bại", description: res?.EM || "Không thể xóa giao dịch" });
                     }
                 } catch (error) {
-                    notification.error({
-                        message: "Lỗi",
-                        description: "Đã xảy ra lỗi khi xóa giao dịch"
-                    });
+                    notification.error({ message: "Lỗi", description: "Đã xảy ra lỗi khi xóa giao dịch" });
                 }
             },
         });
@@ -282,54 +224,52 @@ const TransactionsPage = () => {
             render: (text, record, index) => index + 1,
             width: '60px',
             align: 'center',
+            responsive: ['md'],
         },
         {
             title: 'Số tiền',
             dataIndex: 'amount',
             render: (value) => value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            onCell: () => ({ 'data-label': 'Số tiền' }),
         },
         {
             title: 'Loại',
             dataIndex: 'type',
-            render: (type) => type === 'expense' ? 'Chi tiêu' : 'Thu nhập'
+            render: (type) => (type === 'expense' ? 'Chi tiêu' : 'Thu nhập'),
+            onCell: () => ({ 'data-label': 'Loại' }),
         },
         {
             title: 'Phương thức',
             dataIndex: 'accountName',
             render: (name) => name || '',
+            onCell: () => ({ 'data-label': 'Phương thức' }),
         },
         {
             title: 'Danh mục',
             dataIndex: 'categoryName',
             render: (name) => name || '',
+            onCell: () => ({ 'data-label': 'Danh mục' }),
         },
         {
             title: 'Ngày và giờ',
             dataIndex: 'date',
             render: (date) => dayjs(date).format('DD/MM/YYYY HH:mm'),
+            onCell: () => ({ 'data-label': 'Ngày và giờ' }),
         },
         {
             title: 'Mô tả',
             dataIndex: 'description',
+            onCell: () => ({ 'data-label': 'Mô tả' }),
         },
         {
             title: 'Chức năng',
             key: 'action',
             render: (_, record) => (
-                <Space size="middle">
-                    <Button
-                        type="primary"
-                        icon={<EditOutlined />}
-                        onClick={() => handleEdit(record)}
-                    >
+                <Space className="action-buttons" size="small">
+                    <Button type="primary" icon={<EditOutlined />} onClick={() => handleEdit(record)} size="small">
                         Sửa
                     </Button>
-                    <Button
-                        type="primary"
-                        danger
-                        icon={<DeleteOutlined />}
-                        onClick={() => handleDelete(record)}
-                    >
+                    <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => handleDelete(record)} size="small">
                         Xóa
                     </Button>
                 </Space>
@@ -367,7 +307,7 @@ const TransactionsPage = () => {
     };
 
     return (
-        <div style={{ padding: 20 }}>
+        <div className="transactions-container">
             {isLoading ? (
                 <div style={{
                     position: 'fixed',
@@ -377,45 +317,34 @@ const TransactionsPage = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '16px'
+                    gap: '16px',
                 }}>
                     <Spin size="large" />
                     <div>Vui lòng đợi nội dung đang tải!</div>
                 </div>
             ) : (
                 <>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        position: 'sticky',
-                        top: 0,
-                        zIndex: 1,
-                        backgroundColor: '#f0f2f5',
-                        marginBottom: 16,
-                    }}>
-                        <Space>
+                    <div className="filter-bar">
+                        <div className="filter-controls">
                             <Radio.Group value={filterType} onChange={e => setFilterType(e.target.value)}>
                                 <Radio.Button value="all">Tất cả</Radio.Button>
                                 <Radio.Button value="income">Thu nhập</Radio.Button>
                                 <Radio.Button value="expense">Chi tiêu</Radio.Button>
                             </Radio.Group>
-
-                            <RangePicker
-                                format="DD/MM/YYYY"
-                                onChange={handleDateRangeChange}
-                                placeholder={['Từ ngày', 'Đến ngày']}
-                            />
-
-                            <Input
-                                placeholder="Tìm kiếm theo phương thức, danh mục, mô tả"
-                                value={searchKeyword}
-                                onChange={handleSearchChange}
-                                style={{ width: 300 }}
-                                allowClear
-                            />
-                        </Space>
-
+                            <div className="date-search-container">
+                                <RangePicker
+                                    format="DD/MM/YYYY"
+                                    onChange={handleDateRangeChange}
+                                    placeholder={['Từ ngày', 'Đến ngày']}
+                                />
+                                <Input
+                                    placeholder="Tìm kiếm theo phương thức, danh mục, mô tả"
+                                    value={searchKeyword}
+                                    onChange={handleSearchChange}
+                                    allowClear
+                                />
+                            </div>
+                        </div>
                         <Button type="primary" onClick={showModal} style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}>
                             <PlusCircleOutlined /> Thêm giao dịch
                         </Button>
@@ -430,11 +359,7 @@ const TransactionsPage = () => {
                         cancelText="Hủy"
                     >
                         <Form form={form} layout="vertical">
-                            <Form.Item
-                                name="amount"
-                                label="Số tiền"
-                                rules={[{ required: true, message: 'Vui lòng nhập số tiền!' }]}
-                            >
+                            <Form.Item name="amount" label="Số tiền" rules={[{ required: true, message: 'Vui lòng nhập số tiền!' }]}>
                                 <InputNumber
                                     style={{ width: '100%' }}
                                     formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -444,36 +369,15 @@ const TransactionsPage = () => {
                                     controls={false}
                                 />
                             </Form.Item>
-                            <Form.Item
-                                name="type"
-                                label="Loại"
-                                rules={[{ required: true, message: 'Vui lòng chọn loại!' }]}
-                            >
-                                <Select
-                                    placeholder="Chọn loại"
-                                    options={typeOptions}
-                                />
+                            <Form.Item name="type" label="Loại" rules={[{ required: true, message: 'Vui lòng chọn loại!' }]}>
+                                <Select placeholder="Chọn loại" options={typeOptions} />
                             </Form.Item>
-                            <Form.Item
-                                name="accountId"
-                                label="Phương thức"
-                                rules={[{ required: true, message: 'Vui lòng chọn phương thức!' }]}
-                            >
-                                <Select
-                                    placeholder="Chọn phương thức"
-                                    options={accounts}
-                                />
+                            <Form.Item name="accountId" label="Phương thức" rules={[{ required: true, message: 'Vui lòng chọn phương thức!' }]}>
+                                <Select placeholder="Chọn phương thức" options={accounts} />
                             </Form.Item>
-                            <Form.Item
-                                noStyle
-                                shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}
-                            >
+                            <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}>
                                 {({ getFieldValue }) => (
-                                    <Form.Item
-                                        name="categoryId"
-                                        label="Danh mục"
-                                        rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
-                                    >
+                                    <Form.Item name="categoryId" label="Danh mục" rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}>
                                         <Select
                                             placeholder="Chọn danh mục"
                                             options={getFilteredCategories(getFieldValue('type'))}
@@ -481,7 +385,7 @@ const TransactionsPage = () => {
                                                 if (!getFieldValue('type')) {
                                                     notification.warning({
                                                         message: "Chưa chọn loại",
-                                                        description: "Vui lòng chọn loại giao dịch trước khi chọn danh mục."
+                                                        description: "Vui lòng chọn loại giao dịch trước khi chọn danh mục.",
                                                     });
                                                 }
                                             }}
@@ -489,11 +393,7 @@ const TransactionsPage = () => {
                                     </Form.Item>
                                 )}
                             </Form.Item>
-                            <Form.Item
-                                name="date"
-                                label="Ngày và giờ"
-                                initialValue={dayjs()}
-                            >
+                            <Form.Item name="date" label="Ngày và giờ" initialValue={dayjs()}>
                                 <DatePicker
                                     style={{ width: '100%' }}
                                     format="DD/MM/YYYY HH:mm"
@@ -501,10 +401,7 @@ const TransactionsPage = () => {
                                     defaultValue={dayjs()}
                                 />
                             </Form.Item>
-                            <Form.Item
-                                name="description"
-                                label="Mô tả"
-                            >
+                            <Form.Item name="description" label="Mô tả">
                                 <Input.TextArea />
                             </Form.Item>
                         </Form>
@@ -519,11 +416,7 @@ const TransactionsPage = () => {
                         cancelText="Hủy"
                     >
                         <Form form={editForm} layout="vertical">
-                            <Form.Item
-                                name="amount"
-                                label="Số tiền"
-                                rules={[{ required: true, message: 'Vui lòng nhập số tiền!' }]}
-                            >
+                            <Form.Item name="amount" label="Số tiền" rules={[{ required: true, message: 'Vui lòng nhập số tiền!' }]}>
                                 <InputNumber
                                     style={{ width: '100%' }}
                                     formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -533,36 +426,15 @@ const TransactionsPage = () => {
                                     controls={false}
                                 />
                             </Form.Item>
-                            <Form.Item
-                                name="type"
-                                label="Loại"
-                                rules={[{ required: true, message: 'Vui lòng chọn loại!' }]}
-                            >
-                                <Select
-                                    placeholder="Chọn loại"
-                                    options={typeOptions}
-                                />
+                            <Form.Item name="type" label="Loại" rules={[{ required: true, message: 'Vui lòng chọn loại!' }]}>
+                                <Select placeholder="Chọn loại" options={typeOptions} />
                             </Form.Item>
-                            <Form.Item
-                                name="accountId"
-                                label="Phương thức"
-                                rules={[{ required: true, message: 'Vui lòng chọn phương thức!' }]}
-                            >
-                                <Select
-                                    placeholder="Chọn phương thức"
-                                    options={accounts}
-                                />
+                            <Form.Item name="accountId" label="Phương thức" rules={[{ required: true, message: 'Vui lòng chọn phương thức!' }]}>
+                                <Select placeholder="Chọn phương thức" options={accounts} />
                             </Form.Item>
-                            <Form.Item
-                                noStyle
-                                shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}
-                            >
+                            <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type}>
                                 {({ getFieldValue }) => (
-                                    <Form.Item
-                                        name="categoryId"
-                                        label="Danh mục"
-                                        rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
-                                    >
+                                    <Form.Item name="categoryId" label="Danh mục" rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}>
                                         <Select
                                             placeholder="Chọn danh mục"
                                             options={getFilteredCategories(getFieldValue('type'))}
@@ -570,7 +442,7 @@ const TransactionsPage = () => {
                                                 if (!getFieldValue('type')) {
                                                     notification.warning({
                                                         message: "Chưa chọn loại",
-                                                        description: "Vui lòng chọn loại giao dịch trước khi chọn danh mục."
+                                                        description: "Vui lòng chọn loại giao dịch trước khi chọn danh mục.",
                                                     });
                                                 }
                                             }}
@@ -578,10 +450,7 @@ const TransactionsPage = () => {
                                     </Form.Item>
                                 )}
                             </Form.Item>
-                            <Form.Item
-                                name="date"
-                                label="Ngày và giờ"
-                            >
+                            <Form.Item name="date" label="Ngày và giờ">
                                 <DatePicker
                                     style={{ width: '100%' }}
                                     format="DD/MM/YYYY HH:mm"
@@ -589,10 +458,7 @@ const TransactionsPage = () => {
                                     defaultValue={dayjs()}
                                 />
                             </Form.Item>
-                            <Form.Item
-                                name="description"
-                                label="Mô tả"
-                            >
+                            <Form.Item name="description" label="Mô tả">
                                 <Input.TextArea />
                             </Form.Item>
                         </Form>

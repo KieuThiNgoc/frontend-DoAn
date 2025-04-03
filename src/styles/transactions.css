@@ -1,6 +1,53 @@
+.transactions-container {
+    padding: 20px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #f0f2f5;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.filter-controls .ant-radio-group {
+    margin-right: 10px;
+}
+
+.date-search-container {
+    display: flex;
+    align-items: center;
+}
+
+.uniform-width {
+    width: 100%;
+    max-width: 300px;
+}
+
+.filter-bar .ant-btn {
+    flex-shrink: 0;
+}
+
+.ant-table-wrapper {
+    overflow-x: auto;
+}
+
 .ant-table-body {
     overflow-y: auto !important;
     scrollbar-width: thin;
+    max-height: calc(100vh - 250px);
 }
 
 .ant-table-body::-webkit-scrollbar {
@@ -14,4 +61,206 @@
 
 .ant-table-body::-webkit-scrollbar-track {
     background: transparent;
+}
+
+.ant-modal {
+    width: 90% !important;
+    max-width: 600px;
+}
+
+@media (max-width: 1024px) {
+    .filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-controls {
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+
+    .filter-bar .ant-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 820px) {
+    .filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-controls .ant-radio-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .date-search-container {
+        display: flex;
+        flex-direction: row;
+        /* RangePicker và Input nằm ngang */
+        width: 100%;
+        gap: 10px;
+    }
+
+    .date-search-container .ant-picker,
+    .date-search-container .ant-input {
+        margin-right: 0;
+        max-width: none;
+    }
+
+    .date-search-container .ant-picker {
+        width: 100%;
+
+    }
+
+    .date-search-container .ant-input {
+        width: 100%;
+
+    }
+
+    .filter-bar .ant-btn {
+        width: 100%;
+        max-width: none;
+        /* Bỏ giới hạn max-width */
+        margin-top: 10px;
+    }
+
+    .ant-table-thead th {
+        font-size: 12px;
+        padding: 8px !important;
+    }
+
+    .ant-table-tbody td {
+        font-size: 12px;
+        padding: 8px !important;
+    }
+
+    .ant-table-column-title:contains('Chức năng'),
+    .ant-table-cell:where(:last-child) {
+        display: none;
+    }
+}
+
+@media (max-width: 485px) {
+    .filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-controls {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    .date-search-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .date-search-container .ant-picker,
+    .date-search-container .ant-input {
+        width: 100%;
+        margin-right: 0;
+        max-width: none;
+    }
+
+    .filter-bar .ant-btn {
+        width: 100%;
+        max-width: none;
+        margin-top: 10px;
+    }
+
+    .filter-controls .ant-radio-group .ant-radio-button-wrapper {
+        padding: 0 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-bar {
+        padding: 5px 0;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .date-search-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .date-search-container .ant-picker,
+    .date-search-container .ant-input {
+        width: 100%;
+        font-size: 12px;
+        max-width: none;
+    }
+
+    .ant-table {
+        display: block;
+    }
+
+    .ant-table-thead {
+        display: none;
+    }
+
+    .ant-table-tbody,
+    .ant-table-row,
+    .ant-table-cell {
+        display: block;
+        width: 100%;
+    }
+
+    .ant-table-row {
+        border-bottom: 1px solid #f0f0f0;
+        padding: 10px 0;
+    }
+
+    .ant-table-cell {
+        padding: 5px 10px !important;
+        font-size: 14px;
+        border: none;
+    }
+
+    .ant-table-cell::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+        color: #555;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+    }
+
+    .action-buttons .ant-btn {
+        padding: 0 8px;
+        font-size: 12px;
+    }
+
+    .ant-modal {
+        width: 95% !important;
+        max-width: 320px;
+    }
+
+    .ant-form-item-label {
+        font-size: 12px;
+    }
+
+    .ant-form-item {
+        margin-bottom: 12px;
+    }
 }
