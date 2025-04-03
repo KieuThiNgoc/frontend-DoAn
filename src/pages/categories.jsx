@@ -244,21 +244,17 @@ const CategoriesPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{
-                        marginBottom: 16,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
+                    <div className="filter-bar" style={{
+                        marginBottom: 16
                     }}>
-                        <Space>
+                        <div>
                             <Input
                                 placeholder="Tìm kiếm theo tên danh mục, loại danh mục"
                                 value={searchKeyword}
                                 onChange={handleSearchChange}
-                                style={{ width: 300 }}
                                 allowClear
                             />
-                        </Space>
+                        </div>
 
                         <Button type="primary" onClick={showModal} style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}>
                             <PlusCircleOutlined /> Thêm danh mục
