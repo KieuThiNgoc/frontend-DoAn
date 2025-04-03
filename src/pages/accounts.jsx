@@ -3,6 +3,7 @@ import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/ic
 import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { getAccountApi, createAccountApi, updateAccountApi, deleteAccountApi } from '../util/api';
 import { AuthContext } from '../components/context/auth.context';
+import '../styles/accounts.css';
 
 const AccountsPage = () => {
     const { auth } = useContext(AuthContext);
@@ -249,21 +250,17 @@ const AccountsPage = () => {
                 </div>
             ) : (
                 <>
-                    <div style={{
+                    <div className="filter-bar" style={{
                         marginBottom: 16,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
                     }}>
-                        <Space>
+                        <div>
                             <Input
                                 placeholder="Tìm kiếm theo tên phương thức, loại tài khoản"
                                 value={searchKeyword}
                                 onChange={handleSearchChange}
-                                style={{ width: 300 }}
                                 allowClear
                             />
-                        </Space>
+                        </div>
 
                         <Button type="primary" onClick={showModal} style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}>
                             <PlusCircleOutlined /> Thêm phương thức

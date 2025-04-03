@@ -101,7 +101,6 @@
     .date-search-container {
         display: flex;
         flex-direction: row;
-        /* RangePicker và Input nằm ngang */
         width: 100%;
         gap: 10px;
     }
@@ -114,18 +113,15 @@
 
     .date-search-container .ant-picker {
         width: 100%;
-
     }
 
     .date-search-container .ant-input {
         width: 100%;
-
     }
 
     .filter-bar .ant-btn {
         width: 100%;
         max-width: none;
-        /* Bỏ giới hạn max-width */
         margin-top: 10px;
     }
 
