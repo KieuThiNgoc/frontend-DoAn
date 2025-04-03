@@ -42,7 +42,7 @@ const LoginPage = () => {
 
     return (
         <div style={{ backgroundColor: '#E6F0FA', minHeight: '100vh' }}>
-            <Row style={{ minHeight: '100vh', alignItems: 'center' }}>
+            <Row style={{ minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
                 {/* Bên trái: Hình minh họa */}
                 <Col xs={0} md={12} style={{ padding: '40px' }}>
                     <div style={{ textAlign: 'center' }}>
