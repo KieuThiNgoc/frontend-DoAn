@@ -1,0 +1,60 @@
+/* dashboard.css */
+.dashboard-container {
+    padding: 24px;
+    min-height: 85vh;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    padding: 15px;
+    borderRadius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.year-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-container {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Responsive design cho màn hình nhỏ hơn 670px */
+@media (max-width: 670px) {
+    .header-container {
+        flex-direction: column;
+        /* Chuyển sang column */
+        align-items: flex-start;
+        /* Căn trái */
+        gap: 15px;
+        /* Giảm khoảng cách */
+    }
+
+    .year-selector {
+        width: 100%;
+        /* Chiếm toàn bộ chiều rộng */
+    }
+
+    .year-selector .ant-select {
+        width: 100% !important;
+        /* Select chiếm toàn bộ chiều rộng */
+    }
+}
