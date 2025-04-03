@@ -23,11 +23,13 @@ const ReportPage = () => {
             if (pieRes?.EC === 0) {
                 const pieChartExpenseData = pieRes.DT.expenseByCategory?.map(item => ({
                     category: item.name,
-                    value: item.amount
+                    value: item.amount,
+                    transactions: item.transactions // Lưu chi tiết giao dịch
                 })) || [];
                 const pieChartIncomeData = pieRes.DT.incomeByCategory?.map(item => ({
                     category: item.name,
-                    value: item.amount
+                    value: item.amount,
+                    transactions: item.transactions // Lưu chi tiết giao dịch
                 })) || [];
 
                 setReportData({
@@ -64,22 +66,48 @@ const ReportPage = () => {
         const [startDate, endDate] = dateRange;
         const title = `Báo cáo tài chính từ ${dayjs(startDate).format('DD/MM/YYYY')} đến ${dayjs(endDate).format('DD/MM/YYYY')}`;
 
+        // Chuẩn bị dữ liệu tổng quan
         const excelData = [
             { "Tiêu đề": title },
             { "Tổng thu": reportData.totalIncome, "Tổng chi": reportData.totalExpense },
             {},
-            { "Tiêu đề": "Phân bổ thu nhập theo danh mục" },
-            ...reportData.pieChartIncomeData.map(item => ({
-                "Danh mục": item.category,
-                "Số tiền": item.value
-            })),
-            {},
-            { "Tiêu đề": "Phân bổ chi tiêu theo danh mục" },
-            ...reportData.pieChartExpenseData.map(item => ({
-                "Danh mục": item.category,
-                "Số tiền": item.value
-            }))
         ];
+
+        // Thêm phân bổ thu nhập theo danh mục và chi tiết giao dịch
+        excelData.push({ "Tiêu đề": "Phân bổ thu nhập theo danh mục" });
+        reportData.pieChartIncomeData.forEach(item => {
+            excelData.push({
+                "Danh mục": item.category,
+                "Tổng tiền": item.value,
+            });
+            // Thêm chi tiết giao dịch
+            item.transactions?.forEach(tx => {
+                excelData.push({
+                    "Ngày": dayjs(tx.date).format('DD/MM/YYYY'),
+                    "Số tiền": tx.amount,
+                    "Mô tả": tx.description || 'Không có mô tả',
+                });
+            });
+            excelData.push({}); // Dòng trống để phân cách
+        });
+
+        // Thêm phân bổ chi tiêu theo danh mục và chi tiết giao dịch
+        excelData.push({ "Tiêu đề": "Phân bổ chi tiêu theo danh mục" });
+        reportData.pieChartExpenseData.forEach(item => {
+            excelData.push({
+                "Danh mục": item.category,
+                "Tổng tiền": item.value,
+            });
+            // Thêm chi tiết giao dịch
+            item.transactions?.forEach(tx => {
+                excelData.push({
+                    "Ngày": dayjs(tx.date).format('DD/MM/YYYY'),
+                    "Số tiền": tx.amount,
+                    "Mô tả": tx.description || 'Không có mô tả',
+                });
+            });
+            excelData.push({}); // Dòng trống để phân cách
+        });
 
         const ws = XLSX.utils.json_to_sheet(excelData);
         const wb = XLSX.utils.book_new();
