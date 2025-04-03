@@ -12,14 +12,6 @@
   padding: 0 24px;
 }
 
-.mobile-menu-button {
-  display: none;
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1001;
-}
-
 .mobile-menu-button .ant-btn {
   background: transparent !important;
   border: none !important;
@@ -38,12 +30,7 @@
   justify-content: center;
 }
 
-.mobile-menu-button .ant-btn:hover {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
+.mobile-menu-button .ant-btn:hover,
 .mobile-menu-button .ant-btn:active {
   background: transparent !important;
   border: none !important;
@@ -52,6 +39,26 @@
 
 .mobile-menu-button .ant-btn::after {
   display: none !important;
+}
+
+/* Style cho nút thông báo trên mobile */
+.mobile-notification-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: 32px !important;
+  width: 32px !important;
+}
+
+.mobile-notification-button .anticon {
+  font-size: 24px;
+}
+
+.mobile-notification-button:hover,
+.mobile-notification-button:active {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .ant-menu-horizontal>.ant-menu-item:first-child,
@@ -95,15 +102,12 @@
 
 .desktop-menu .ant-menu-item:first-child {
   margin-right: auto;
-  /* Đẩy logo sang trái */
 }
 
 .desktop-menu .ant-menu-item:last-child {
   margin-left: auto;
-  /* Đẩy nút đăng nhập sang phải khi chưa đăng nhập */
 }
 
-/* Xóa gạch chân khi hover vào tab Đăng nhập */
 .ant-menu-item[data-menu-id$="login"]::after,
 .ant-menu-item[data-menu-id$="login"]:hover::after {
   display: none !important;
@@ -119,13 +123,29 @@
   text-decoration: none !important;
 }
 
-@media screen and (max-width: 1240px) {
+/* Breakpoint mới: 1024px */
+@media screen and (max-width: 1024px) {
   .mobile-menu-button {
-    display: block;
+    display: flex;
+    /* Hiển thị trên mobile */
+  }
+
+  .mobile-menu-button {
+    display: none;
+    /* Ẩn mặc định trên desktop */
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Khoảng cách giữa chuông thông báo và icon menu */
   }
 
   .desktop-menu {
     display: none;
+    /* Ẩn menu desktop */
   }
 
   .ant-menu-horizontal {

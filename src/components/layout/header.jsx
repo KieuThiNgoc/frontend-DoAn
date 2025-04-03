@@ -31,9 +31,9 @@ const Header = () => {
         const isHomePage = location.pathname === '/' && !auth.isAuthenticated;
         if (!isHomePage) return;
 
-        const sections = ['home', 'features']; // Xóa 'features'
+        const sections = ['home', 'features'];
         const handleScroll = () => {
-            const scrollPosition = window.scrollY + 100; // Offset để tab thay đổi sớm hơn một chút
+            const scrollPosition = window.scrollY + 100;
             let activeSection = 'home';
 
             for (const section of sections) {
@@ -67,7 +67,7 @@ const Header = () => {
         const element = document.getElementById(sectionId);
         if (element) {
             const header = document.querySelector('.ant-menu-horizontal');
-            const headerHeight = header ? header.offsetHeight : 64; // Chiều cao header
+            const headerHeight = header ? header.offsetHeight : 64;
             const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
@@ -150,6 +150,7 @@ const Header = () => {
         </Menu>
     );
 
+    // Menu cho desktop (bao gồm thông báo)
     const fullMenuItems = [
         {
             label: <Link to={"/dashboard"}><img src={logo} alt="Logo" /></Link>,
@@ -213,6 +214,51 @@ const Header = () => {
         },
     ];
 
+    // Menu cho mobile (không bao gồm thông báo)
+    const mobileMenuItems = [
+        {
+            label: <Link to={"/dashboard"}><img src={logo} alt="Logo" /></Link>,
+            key: 'dashboard',
+            icon: null,
+        },
+        {
+            label: <Link to={"/reports"} style={{ textDecoration: 'none' }}>Báo cáo</Link>,
+            key: 'reports',
+            icon: <BarChartOutlined />,
+        },
+        {
+            label: <Link to={"/budgets"} style={{ textDecoration: 'none' }}>Ngân sách</Link>,
+            key: 'budgets',
+            icon: <WalletOutlined />,
+        },
+        {
+            label: <Link to={"/categories"} style={{ textDecoration: 'none' }}>Danh mục</Link>,
+            key: 'categories',
+            icon: <TagsOutlined />,
+        },
+        {
+            label: <Link to={"/accounts"} style={{ textDecoration: 'none' }}>Tài khoản</Link>,
+            key: 'accounts',
+            icon: <BankOutlined />,
+        },
+        {
+            label: <Link to={"/transactions"} style={{ textDecoration: 'none' }}>Giao dịch</Link>,
+            key: 'transactions',
+            icon: <TransactionOutlined />,
+        },
+        {
+            label: `Xin chào, ${auth?.user?.name ?? ''}`,
+            key: 'SubMenu',
+            icon: <UserOutlined />,
+            children: [
+                {
+                    label: <span onClick={handleLogout}>Đăng xuất</span>,
+                    key: 'logout',
+                }
+            ],
+        },
+    ];
+
     const homeMenuItems = [
         {
             label: <Link to={"/"}><img src={logo} alt="Logo" /></Link>,
@@ -245,10 +291,26 @@ const Header = () => {
 
     const isHomePage = location.pathname === '/';
     const menuItems = (!auth.isAuthenticated && isHomePage) ? homeMenuItems : fullMenuItems;
+    const mobileItems = (!auth.isAuthenticated && isHomePage) ? homeMenuItems : mobileMenuItems;
 
     return (
         <>
             <div className="mobile-menu-button">
+                {/* Chuông thông báo bên trái */}
+                {auth.isAuthenticated && !isHomePage && (
+                    <Dropdown overlay={notificationMenu} trigger={['click']}>
+                        <Button
+                            type="text"
+                            className="mobile-notification-button"
+                            icon={
+                                <Badge size='small' count={notifications.filter(n => !n.isRead).length}>
+                                    <BellOutlined style={{ fontSize: '24px' }} />
+                                </Badge>
+                            }
+                        />
+                    </Dropdown>
+                )}
+                {/* Icon menu bên phải */}
                 <Button
                     type="text"
                     icon={<MenuOutlined />}
@@ -285,7 +347,7 @@ const Header = () => {
                     onClick={onClick}
                     selectedKeys={[current]}
                     mode="vertical"
-                    items={menuItems}
+                    items={mobileItems}
                 />
             </Drawer>
         </>
